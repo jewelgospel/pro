@@ -6,135 +6,196 @@
     <title>Portfolio | UI/UX & Illustration</title>
     <style>
         :root {
-            --bg-color: #fdfcf8;
-            --primary-color: #b5a48b;
+            --bg-color: #fdfcf8; /* 象牙白 */
+            --primary-color: #b5a48b; /* 黃銅色 */
             --text-color: #4a4a4a;
-            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(255, 255, 255, 0.65);
         }
 
         body {
             background-color: var(--bg-color);
+            /* 1. 追加紙張質感底紋 */
+            background-image: url("https://www.transparenttextures.com/patterns/felt.png");
             color: var(--text-color);
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
             margin: 0;
-            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 2. 追加背景裝飾氣泡與幾何元件 */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate;
+        }
+        body::before {
+            background: radial-gradient(circle, #f5e6ca 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+        }
+        body::after {
+            background: radial-gradient(circle, #e6dfcf 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 100px); }
         }
 
         header {
             text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(to bottom, #f5f1e6, var(--bg-color));
+            padding: 80px 20px;
+            position: relative;
+        }
+        
+        /* 裝飾線條 */
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--primary-color);
         }
 
         header h1 {
             font-weight: 300;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             color: var(--primary-color);
             margin: 0;
+            font-size: 2rem;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
 
         .portfolio-item {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(181, 164, 139, 0.2);
+            border: 1px solid rgba(181, 164, 139, 0.15);
             border-radius: 12px;
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(181, 164, 139, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(181, 164, 139, 0.1);
+            border: 1px solid rgba(181, 164, 139, 0.4);
         }
 
         .portfolio-item img {
             width: 100%;
-            height: 220px;
+            height: 240px;
             object-fit: cover;
             display: block;
         }
 
         .portfolio-info {
-            padding: 15px;
+            padding: 18px;
             text-align: center;
         }
 
         .portfolio-info h3 {
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--primary-color);
-            font-weight: 400;
+            letter-spacing: 1px;
+            font-weight: 500;
         }
 
-        /* Lightbox */
+        /* 燈箱效果 */
         #lightbox {
             display: none;
             position: fixed;
-            z-index: 9999;
+            z-index: 10000;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(40, 38, 35, 0.92);
+            backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
         }
 
         #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 3px solid white;
+            max-width: 85%;
+            max-height: 85%;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; }
+        footer {
+            text-align: center;
+            padding: 100px 20px;
+            opacity: 0.4;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>MY WORKS</h1>
-    <p>Selected Projects & Illustrations</p>
-</header>
+    <header>
+        <h1>SELECTED WORKS</h1>
+        <p style="font-weight: 200; opacity: 0.7;">UI/UX & Visual Design Portfolio</p>
+    </header>
 
-<div class="container">
-    <div class="portfolio-grid">
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="UI1.png"> <div class="portfolio-info"><h3>UI Design Concept</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423.png"> <div class="portfolio-info"><h3>Design Sketch 0423</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423A.png"> <div class="portfolio-info"><h3>Process Details</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="icon.png"> <div class="portfolio-info"><h3>Custom Icons</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="jewel.jpg"> <div class="portfolio-info"><h3>Jewel Illustration</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="mothersday.jpg"> <div class="portfolio-info"><h3>Mother's Day Theme</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="flower.jpg"> <div class="portfolio-info"><h3>Floral Sketch</h3></div></div>
-        <div class="portfolio-item" onclick="openLightbox(this)"><img src="book.png"> <div class="portfolio-info"><h3>Object Drawing</h3></div></div>
+    <div class="container">
+        <div class="portfolio-grid">
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="UI1.png"> <div class="portfolio-info"><h3>UI Design Concept</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423.png"> <div class="portfolio-info"><h3>Design Sketch 0423</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423A.png"> <div class="portfolio-info"><h3>Process Details</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="icon.png"> <div class="portfolio-info"><h3>Custom Icons</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="jewel.jpg"> <div class="portfolio-info"><h3>Jewel Illustration</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="mothersday.jpg"> <div class="portfolio-info"><h3>Mother's Day Theme</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="flower.jpg"> <div class="portfolio-info"><h3>Floral Sketch</h3></div></div>
+            <div class="portfolio-item" onclick="openLightbox(this)"><img src="book.png"> <div class="portfolio-info"><h3>Object Drawing</h3></div></div>
+        </div>
     </div>
-</div>
 
-<div id="lightbox" onclick="closeLightbox()">
-    <img id="lightbox-img">
-</div>
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="">
+    </div>
 
-<footer>&copy; 2026 Designed for Portfolio</footer>
+    <footer>
+        DESIGNED FOR THE PORTFOLIO &copy; 2026
+    </footer>
 
-<script>
-    function openLightbox(el) {
-        document.getElementById('lightbox-img').src = el.querySelector('img').src;
-        document.getElementById('lightbox').style.display = 'flex';
-    }
-    function closeLightbox() {
-        document.getElementById('lightbox').style.display = 'none';
-    }
-</script>
+    <script>
+        function openLightbox(el) {
+            const imgSrc = el.querySelector('img').src;
+            const lbImg = document.getElementById('lightbox-img');
+            lbImg.src = imgSrc;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 
 </body>
 </html>
