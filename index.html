@@ -9,7 +9,7 @@
             --bg-color: #fdfcf8; /* 象牙白 */
             --primary-color: #b5a48b; /* 霧金/黃銅色 */
             --text-color: #4a4a4a;
-            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.7);
         }
 
         body {
@@ -34,7 +34,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -43,26 +43,29 @@
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 30px;
         }
 
         .portfolio-item {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(181, 164, 139, 0.2);
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(181, 164, 139, 0.15);
         }
 
         .portfolio-item img {
             width: 100%;
             height: 250px;
             object-fit: cover;
+            display: block;
             border-bottom: 1px solid rgba(181, 164, 139, 0.1);
         }
 
@@ -73,19 +76,45 @@
         .portfolio-info h3 {
             margin: 0 0 10px 0;
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .portfolio-info p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin: 0;
             opacity: 0.8;
         }
 
-        /* 響應式調整 */
-        @media (max-width: 600px) {
-            header { padding: 40px 20px; }
-            header h1 { font-size: 1.5rem; }
+        /* 放大圖片的遮罩層 (Lightbox) */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            opacity: 0.5;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -93,50 +122,60 @@
 
     <header>
         <h1>DESIGN PORTFOLIO</h1>
-        <p>UI/UX & Original Illustration</p>
+        <p>UI/UX Design & Hand-drawn Illustration</p>
     </header>
 
     <div class="container">
         <div class="portfolio-grid">
             
-            <div class="portfolio-item">
-                <img src="UI1.png" alt="UI Design">
+            <div class="portfolio-item" onclick="openLightbox(this)">
+                <img src="UI1.png" alt="UI Design Concept">
                 <div class="portfolio-info">
-                    <h3>UI Interface Concept</h3>
-                    <p>利用輕盈的視覺語言重構的介面設計，強調操作的直覺與通透感。</p>
+                    <h3>UI Interface Design</h3>
+                    <p>展示了清爽且具備層次感的介面配置，適合現代網頁與應用程式需求。</p>
                 </div>
             </div>
 
-            <div class="portfolio-item">
-                <img src="jewel.jpg" alt="Hand-drawn Jewel">
+            <div class="portfolio-item" onclick="openLightbox(this)">
+                <img src="0423.jpg" alt="Design Log 0423">
                 <div class="portfolio-info">
-                    <h3>Original Assets: Jewel</h3>
-                    <p>個人原創手繪遊戲素材，運用細膩的筆觸展現復古寶石質感。</p>
+                    <h3>Development Log: 04/23</h3>
+                    <p>階段性的設計紀錄，展示從草圖到初步構想的演進過程。</p>
                 </div>
             </div>
 
-            <div class="portfolio-item">
-                <img src="0423.jpg" alt="Project Update">
+            <div class="portfolio-item" onclick="openLightbox(this)">
+                <img src="0423A.jpg" alt="Design Log 0423A">
                 <div class="portfolio-info">
-                    <h3>Development Log</h3>
-                    <p>記錄設計過程中的細節與反饋，這是我持續優化專案的過程。</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item">
-                <img src="icon.jpg" alt="Icon Design">
-                <div class="portfolio-info">
-                    <h3>Custom Icon Set</h3>
-                    <p>針對特定主題開發的圖示集，確保視覺風格與系統一致。</p>
+                    <h3>System Architecture & Sketch</h3>
+                    <p>針對系統邏輯與手繪細節的進階構思，強化整體視覺與功能的連結。</p>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 60px; opacity: 0.5; font-size: 0.8rem;">
-        &copy; 2026 UI/UX Portfolio. All Rights Reserved.
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Enlarged view">
+    </div>
+
+    <footer>
+        &copy; 2026 UI/UX Portfolio. Designed with Elegance.
     </footer>
+
+    <script>
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢復背景滾動
+        }
+    </script>
 
 </body>
 </html>
