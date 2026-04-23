@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<title>旅步 Tripool · 春季包車旅遊限定優惠</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#1BB8B0;
+    --teal-deep:#169A93;
+    --orange:#F4A84A;
+    --orange-deep:#E89534;
+    --pink:#FBD4D8;
+    --ink:#2B2B2B;
+    --ink-soft:#4a4a4a;
+    --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans TC","Poppins",system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  img{display:block;max-width:100%}
+
+  /* page frame */
+  .page{
+    width:1440px;
+    margin:0 auto;
+    padding:32px 56px 64px;
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:6px 2px 22px;
+  }
+  .tagline{
+    display:flex;align-items:center;gap:18px;
+    font-size:34px;font-weight:500;color:var(--teal);
+    letter-spacing:2px;
+  }
+  .tagline .x{
+    font-family:"Poppins",sans-serif;font-weight:600;
+    font-size:28px;color:var(--orange);opacity:1;
+    display:inline-flex;align-items:center;
+    line-height:1;
+    vertical-align:middle;
+    margin:0 2px;
+  }
+  .pill{
+    display:inline-block;
+    background:#ff7bac;
+    color:#FFFFFF;
+    font-size:16px;font-weight:500;
+    padding:8px 18px;
+    border-radius:999px;
+    letter-spacing:2px;
+    margin-left:10px;
+  }
+  .brand{
+    font-size:30px;font-weight:700;color:var(--teal);
+    letter-spacing:1px;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  .brand .tc{font-family:"Noto Sans TC";font-weight:900;font-size:26px}
+  .brand .en{font-family:"Poppins";font-weight:700;font-size:28px}
+
+  /* ============ HERO ============ */
+  .hero-wrap{
+    position:relative;
+  }
+  .hero{
+    position:relative;
+    width:100%;
+    aspect-ratio: 16 / 9;
+    /* asymmetric corners: top-left & bottom-right rounded, top-right & bottom-left square */
+    border-radius:72px 0 72px 0;
+    overflow:hidden;
+    background:#0b2b2a;
+  }
+  .slides{position:absolute;inset:0}
+  .slide{
+    position:absolute;inset:0;
+    opacity:0;transition:opacity 1s ease-in-out;
+    background-size:cover;background-position:center;
+  }
+  .slide.on{opacity:1}
+  .slide::after{
+    /* very light bottom-left shade so title stays readable */
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.22) 100%),
+               linear-gradient(90deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0) 45%);
+    pointer-events:none;
+  }
+
+  /* Floating CTA sticker — fixed to viewport, follows scroll */
+  .cta-float{
+    position:fixed;
+    top:160px;
+    right:max(40px, calc((100vw - 1440px) / 2 + 40px));
+    width:170px;
+    z-index:50;
+    display:block;
+    transition:transform .25s ease, filter .25s ease;
+    cursor:pointer;
+    filter:
+      drop-shadow(10px 14px 18px rgba(0,0,0,.28))
+      drop-shadow(4px 6px 6px rgba(0,0,0,.18));
+  }
+  .cta-float:hover{
+    transform:translateY(-3px) rotate(-1deg);
+    filter:
+      drop-shadow(12px 18px 22px rgba(0,0,0,.32))
+      drop-shadow(4px 6px 6px rgba(0,0,0,.2));
+  }
+  .cta-float img{width:100%;height:auto;display:block}
+
+  /* Title block bottom-left INSIDE hero */
+  .hero-title{
+    position:absolute;left:60px;bottom:56px;z-index:3;
+    color:#fff;
+    font-weight:900;
+    font-size:64px;
+    line-height:1.18;
+    letter-spacing:6px;
+    text-shadow:0 2px 14px rgba(0,0,0,.35);
+  }
+  .hero-title div + div{margin-top:6px;padding-left:24px}
+
+  /* Sub caption BELOW the hero image */
+  .subcap{
+    display:flex;align-items:center;gap:12px;
+    margin:20px 0 0 4px;
+    color:#444;
+    font-family:"Poppins",sans-serif;
+    font-size:19px;letter-spacing:1.5px;font-weight:400;
+  }
+  .subcap .arrows{
+    display:inline-flex;gap:2px;color:var(--orange);
+    font-size:18px;line-height:1;
+  }
+
+  /* arrows */
+  .nav-btn{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:48px;height:48px;border-radius:50%;
+    background:rgba(255,255,255,.85);
+    border:none;cursor:pointer;
+    display:grid;place-items:center;
+    z-index:4;
+    transition:background .2s ease, transform .2s ease;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  .nav-btn:hover{background:#fff;transform:translateY(-50%) scale(1.05)}
+  .nav-btn.prev{left:20px}
+  .nav-btn.next{right:20px}
+  .nav-btn svg{width:20px;height:20px;stroke:var(--teal);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  /* dots */
+  .dots{
+    position:absolute;left:50%;bottom:18px;transform:translateX(-50%);
+    display:flex;gap:8px;z-index:4;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(255,255,255,.55);
+    border:none;cursor:pointer;padding:0;
+    transition:all .25s ease;
+  }
+  .dot.on{background:#fff;width:28px;border-radius:4px}
+
+  /* ============ Price calculator ============ */
+  .calc-wrap{
+    margin-top:96px;
+    padding:72px 72px 80px;
+    background:var(--teal);
+    /* same asymmetric corner language as hero */
+    border-radius:72px 0 72px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .calc-wrap::before{
+    /* very soft map-like pattern hint */
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 15% 25%, rgba(255,255,255,.08) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 75% 60%, rgba(255,255,255,.06) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 40% 80%, rgba(255,255,255,.06) 0 1px, transparent 1.5px);
+    background-size:180px 180px, 220px 220px, 260px 260px;
+    pointer-events:none;
+  }
+  .calc-head{
+    position:relative;
+    color:#fff;
+    margin-bottom:32px;
+  }
+  .calc-head h2{
+    margin:0 0 10px;
+    font-size:44px;font-weight:900;letter-spacing:4px;
+    text-shadow:0 2px 6px rgba(0,0,0,.15);
+  }
+  .calc-head .sub{
+    margin:0;font-size:18px;letter-spacing:2px;opacity:.95;
+  }
+
+  .calc-card{
+    position:relative;
+    background:#fff;
+    border-radius:20px;
+    padding:36px 40px 40px;
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+    max-width:780px;
+  }
+  .field{margin-bottom:22px}
+  .field:last-of-type{margin-bottom:28px}
+  .field label{
+    display:block;
+    font-size:15px;font-weight:600;color:var(--ink);
+    letter-spacing:1.5px;
+    margin-bottom:10px;
+  }
+
+  /* custom select / stacked dropdown */
+  .select{
+    position:relative;
+    width:100%;
+  }
+  .select + .select{margin-top:10px}
+  .select > button.select-toggle{
+    width:100%;
+    display:flex;align-items:center;justify-content:space-between;
+    background:#fff;
+    border:1.5px solid #d8e2e1;
+    border-radius:10px;
+    padding:14px 18px;
+    font:inherit;font-size:16px;color:var(--ink);
+    cursor:pointer;
+    transition:border-color .18s ease, box-shadow .18s ease;
+    text-align:left;
+  }
+  .select > button.select-toggle:hover{border-color:var(--teal)}
+  .select.open > button.select-toggle{
+    border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(27,184,176,.15);
+  }
+  .select > button.select-toggle[data-locked="true"]{
+    background:#f4f8f8;color:var(--ink);cursor:not-allowed;
+  }
+  .select > button .caret{
+    width:14px;height:14px;flex:none;
+    border:solid var(--teal);border-width:0 2px 2px 0;
+    transform:rotate(45deg) translate(-2px,-2px);
+    transition:transform .25s ease;
+  }
+  .select.open > button .caret{
+    transform:rotate(-135deg) translate(-2px,-2px);
+  }
+  .select > button.select-toggle.placeholder{color:#9aa6a5}
+  .select .menu{
+    position:absolute;left:0;right:0;top:calc(100% + 6px);
+    background:#fff;
+    border:1.5px solid #e1eae9;
+    border-radius:10px;
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
+    max-height:280px;overflow-y:auto;
+    z-index:20;
+    display:none;
+    padding:6px 0;
+  }
+  .select.open .menu{display:block}
+  .select .menu button{
+    width:100%;text-align:left;background:none;border:none;
+    padding:11px 18px;
+    font:inherit;font-size:15px;color:var(--ink);
+    cursor:pointer;
+  }
+  .select .menu button:hover,
+  .select .menu button:focus{background:#eaf7f6;color:var(--teal-deep);outline:none}
+
+  .addr-input{
+    width:100%;
+    background:#fff;
+    border:1.5px solid #d8e2e1;
+    border-radius:10px;
+    padding:14px 18px;
+    font:inherit;font-size:16px;color:var(--ink);
+    transition:border-color .18s ease, box-shadow .18s ease;
+  }
+  .addr-input:focus{
+    outline:none;border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(27,184,176,.15);
+  }
+  .addr-input::placeholder{color:#9aa6a5}
+
+  .or-divider{
+    display:flex;align-items:center;gap:12px;
+    margin:14px 2px;color:#9aa6a5;font-size:13px;letter-spacing:2px;
+  }
+  .or-divider::before,.or-divider::after{
+    content:"";flex:1;height:1px;background:#e5ecec;
+  }
+  .cascade.hide-cascade{opacity:.35;pointer-events:none;filter:saturate(.5)}
+
+  /* stacked layer reveal */
+  .layer{display:none;margin-top:10px}
+  .layer.show{display:block;animation:layerIn .28s ease both}
+  @keyframes layerIn{
+    from{opacity:0;transform:translateY(-4px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* trip block (上車 / 下車) */
+  .trip-block{
+    padding:20px 22px;
+    border:1px solid #e5ecec;
+    border-radius:14px;
+    background:#fbfdfd;
+  }
+  .trip-block + .trip-block{margin-top:18px}
+  .trip-block .trip-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:16px;font-weight:700;color:var(--teal-deep);
+    letter-spacing:2px;margin-bottom:14px;
+  }
+  .trip-block .dot-ico{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px rgba(27,184,176,.2);
+  }
+  .trip-block.dropoff .dot-ico{
+    background:var(--orange);
+    box-shadow:0 0 0 3px rgba(244,168,74,.22);
+  }
+
+  .submit-btn{
+    width:100%;
+    background:var(--orange);
+    color:#fff;
+    border:none;border-radius:12px;
+    padding:18px;
+    font-size:18px;font-weight:700;letter-spacing:4px;
+    cursor:pointer;
+    transition:background .2s ease, transform .08s ease;
+    box-shadow:0 8px 18px rgba(244,168,74,.35);
+  }
+  .submit-btn:hover{background:var(--orange-deep)}
+  .submit-btn:active{transform:translateY(1px)}
+
+  /* quote result card (appears after submit) */
+  .quote-result{
+    margin-top:24px;
+    display:none;
+    background:#FFF8EB;
+    border:1px solid #F4D199;
+    border-radius:14px;
+    padding:22px 26px;
+    animation:layerIn .3s ease both;
+  }
+  .quote-result.show{display:block}
+  .cta-float.flyaway{
+    transition: transform .9s cubic-bezier(.55,.05,.35,1), opacity .9s ease;
+    transform: translate(1200px, -60px) rotate(18deg) !important;
+    opacity: 0;
+    pointer-events:none;
+  }
+  .promo-badge{
+    display:none;align-items:center;gap:8px;
+    background:#ff7bac;color:#fff;
+    font-size:14px;font-weight:700;letter-spacing:2px;
+    padding:8px 16px;border-radius:999px;
+    box-shadow:0 6px 16px rgba(255,123,172,.35);
+    animation:popIn .4s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .promo-badge.show{display:inline-flex}
+  .promo-badge::before{
+    content:"";width:8px;height:8px;border-radius:50%;
+    background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35);
+  }
+  @keyframes popIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+  .field-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .field-row label{margin-bottom:0}
+  .promo-note{display:none;margin-top:6px;color:#ff7bac;font-size:14px;font-weight:600;letter-spacing:1.5px}
+  .promo-note.show{display:block}
+  .qr-price.original{text-decoration:line-through;color:#b3b3b3;font-size:22px;font-weight:600;letter-spacing:1px;margin-right:10px}
+  .quote-result .qr-price.final-discount{color:#ff7bac}
+  .quote-result .qr-price.original{color:#b3b3b3}
+  .quote-result .qr-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:8px;font-size:15px;color:var(--ink-soft);
+  }
+  .quote-result .qr-price{
+    font-size:34px;font-weight:900;color:var(--orange-deep);
+    letter-spacing:2px;
+  }
+  .quote-result .qr-note{
+    font-size:13px;color:var(--ink-soft);margin-top:8px;
+  }
+
+  /* ============ RESPONSIVE scale-down for narrow viewports ============ */
+  @media (max-width:1480px){
+    .page{padding:28px 40px 56px}
+    .cta-float{right:24px;width:150px;top:150px}
+  }
+  @media (max-width:1200px){
+    body{overflow-x:auto}
+  }
+
+  /* ============ Content sections ============ */
+  .section{
+    margin-top:80px;
+    padding:0 4px;
+  }
+  .sec-label{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:16px;font-weight:700;letter-spacing:4px;
+    color:var(--teal);text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .sec-label::before{
+    content:"";width:24px;height:2px;background:var(--teal);
+    display:block;
+  }
+  .sec-title{
+    font-size:38px;font-weight:700;color:var(--ink);
+    letter-spacing:3px;line-height:1.3;
+    margin:0 0 14px;
+  }
+  .sec-lead{
+    font-size:17px;color:var(--ink-soft);line-height:1.9;
+    max-width:680px;margin:0 0 40px;
+    letter-spacing:0.5px;
+  }
+
+  /* §1 brand intro – full-width highlight */
+  .brand-intro{
+    background:#f3fcfc;
+    border-radius:0 48px 0 48px;
+    padding:60px 72px;
+    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  }
+  .brand-intro-text .tag{
+    display:inline-block;background:var(--teal);color:#fff;
+    font-size:13px;font-weight:700;letter-spacing:3px;
+    padding:5px 14px;border-radius:4px;margin-bottom:20px;
+  }
+  .brand-intro-text h2{
+    font-size:32px;font-weight:700;color:var(--ink);
+    letter-spacing:2px;line-height:1.45;margin:0 0 18px;
+  }
+  .brand-intro-text p{
+    font-size:16px;color:var(--ink-soft);line-height:2;margin:0;
+  }
+  .brand-intro-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  }
+  .stat-card{
+    background:#fff;border-radius:16px;padding:24px 22px;
+    box-shadow:0 4px 18px rgba(27,184,176,.1);
+    text-align:center;
+  }
+  .stat-card .num{
+    font-size:36px;font-weight:900;color:var(--teal);
+    letter-spacing:1px;line-height:1;
+  }
+  .stat-card .unit{font-size:16px;font-weight:500;margin-left:2px;}
+  .stat-card .label{
+    font-size:13px;color:var(--ink-soft);
+    margin-top:6px;letter-spacing:1.5px;
+  }
+
+  /* §2 services – 3 cards */
+  .service-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .service-card{
+    background:#fff;
+    border:1.5px solid #e8f4f3;
+    border-radius:20px;
+    padding:32px 28px;
+    transition:box-shadow .25s ease,transform .25s ease;
+  }
+  .service-card:hover{
+    box-shadow:0 12px 32px rgba(27,184,176,.14);
+    transform:translateY(-4px);
+  }
+  .service-card .icon{
+    width:52px;height:52px;border-radius:14px;
+    background:var(--teal);
+    display:grid;place-items:center;
+    font-size:24px;margin-bottom:20px;
+  }
+  .service-card h3{
+    font-size:20px;font-weight:700;color:var(--ink);
+    letter-spacing:2px;margin:0 0 6px;
+  }
+  .service-card .sub{
+    font-size:13px;font-weight:600;color:var(--teal);
+    letter-spacing:2px;margin-bottom:14px;
+  }
+  .service-card p{
+    font-size:14px;color:var(--ink-soft);line-height:1.85;margin:0;
+  }
+  .service-note{
+    margin-top:20px;padding:14px 20px;
+    background:#fffbf4;border-left:3px solid var(--orange);
+    border-radius:0 10px 10px 0;
+    font-size:14px;color:var(--ink-soft);line-height:1.7;
+  }
+
+  /* §3 advantages */
+  .adv-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  }
+  .adv-item{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:20px 22px;
+    background:#fff;border-radius:14px;
+    border:1px solid #eef3f3;
+  }
+  .adv-icon{
+    width:36px;height:36px;flex:none;border-radius:10px;
+    background:var(--teal);display:grid;place-items:center;
+    font-size:18px;color:#fff;
+  }
+  .adv-item h4{
+    font-size:15px;font-weight:700;color:var(--ink);
+    margin:0 0 4px;letter-spacing:1.5px;
+  }
+  .adv-item p{font-size:13px;color:var(--ink-soft);margin:0;line-height:1.7;}
+
+  /* §4 booking steps */
+  .steps{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    position:relative;
+  }
+  .steps::before{
+    content:"";position:absolute;top:28px;left:calc(12.5% + 0px);right:calc(12.5% + 0px);height:2px;
+    background:linear-gradient(90deg,var(--teal),var(--orange));
+    z-index:0;
+  }
+  .step{text-align:center;position:relative;z-index:1;padding:0 16px;}
+  .step .num{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--teal);color:#fff;
+    font-size:22px;font-weight:900;
+    display:grid;place-items:center;margin:0 auto 18px;
+    border:3px solid #fff;
+    box-shadow:0 4px 14px rgba(27,184,176,.3);
+  }
+  .step:last-child .num{background:var(--orange);}
+  .step h4{font-size:16px;font-weight:700;color:var(--ink);margin:0 0 6px;letter-spacing:1.5px;}
+  .step p{font-size:13px;color:var(--ink-soft);line-height:1.7;margin:0;}
+  .step-note{
+    margin-top:20px;text-align:center;
+    font-size:13px;color:var(--ink-soft);letter-spacing:1px;
+  }
+
+  /* §5 FAQ */
+  .faq-list{display:flex;flex-direction:column;gap:0;}
+  .faq-item{
+    border-bottom:1px solid #eef3f3;
+    padding:0;overflow:hidden;
+  }
+  .faq-item:first-child{border-top:1px solid #eef3f3;}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;
+    padding:20px 4px;
+    display:flex;justify-content:space-between;align-items:center;
+    font:inherit;font-size:16px;font-weight:600;
+    color:var(--ink);letter-spacing:1px;cursor:pointer;
+  }
+  .faq-q .chevron{
+    width:20px;height:20px;flex:none;
+    border:solid var(--teal);border-width:0 2px 2px 0;
+    transform:rotate(45deg) translate(-3px,-3px);
+    transition:transform .25s ease;
+  }
+  .faq-item.open .faq-q .chevron{
+    transform:rotate(-135deg) translate(-3px,-3px);
+  }
+  .faq-a{
+    max-height:0;overflow:hidden;
+    transition:max-height .35s ease,padding .35s ease;
+    font-size:14px;color:var(--ink-soft);line-height:1.9;
+    padding:0 4px;
+  }
+  .faq-item.open .faq-a{
+    max-height:400px;
+    padding:0 4px 18px;
+  }
+
+  /* §6 App download */
+  .app-section{
+    background:var(--teal);
+    border-radius:72px 0 72px 0;
+    padding:56px 72px;
+    display:grid;grid-template-columns:1fr auto;gap:48px;
+    align-items:center;color:#fff;
+  }
+  .app-section h2{
+    font-size:32px;font-weight:700;letter-spacing:3px;margin:0 0 12px;
+  }
+  .app-section p{font-size:16px;opacity:.92;line-height:1.8;margin:0 0 24px;}
+  .app-badges{display:flex;gap:14px;flex-wrap:wrap;}
+  .app-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.15);
+    border:1.5px solid rgba(255,255,255,.4);
+    border-radius:12px;padding:10px 20px;
+    font-size:15px;font-weight:600;letter-spacing:1px;
+    color:#fff;text-decoration:none;
+    transition:background .2s ease;
+  }
+  .app-badge:hover{background:rgba(255,255,255,.25);}
+  .qr-wrap{
+    background:#fff;border-radius:20px;padding:18px;
+    text-align:center;
+  }
+  .qr-code{
+    width:140px;height:140px;
+    background:
+      repeating-linear-gradient(0deg, #1BB8B0 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(90deg, #1BB8B0 0 8px, transparent 8px 16px);
+    border-radius:8px;margin:0 auto 10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;color:#169A93;font-weight:700;letter-spacing:1px;
+    text-align:center;
+  }
+  .qr-label{font-size:12px;color:var(--ink-soft);letter-spacing:2px;}
+
+  /* §7 partners */
+  .partners-grid{
+    display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;
+  }
+  .partner-tag{
+    padding:10px 20px;
+    background:#f5f5f5;border-radius:8px;
+    font-size:14px;font-weight:500;color:var(--ink-soft);
+    letter-spacing:1.5px;
+  }
+
+  /* Footer */
+  .site-footer{
+    margin-top:80px;
+    border-top:1px solid #eef3f3;
+    padding:36px 4px 48px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .site-footer .brand-f{
+    font-size:20px;font-weight:700;color:var(--teal);letter-spacing:1px;
+  }
+  .site-footer .copy{
+    font-size:13px;color:#b0b0b0;letter-spacing:1.5px;text-align:right;line-height:1.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="page" data-screen-label="01 Campaign Landing">
+
+  <!-- ================= TOP BAR ================= -->
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="tagline">
+        輕鬆旅行 <span class="x">✕</span> 美好時光
+      </div>
+      <span class="pill">現在預約還享有春季包車旅遊優惠！</span>
+    </div>
+    <div class="brand">
+      <span class="tc">旅步</span><span class="en">Tripool</span>
+    </div>
+  </header>
+
+  <!-- ================= FLOATING CTA (follows scroll) ================= -->
+  <a href="#price-calc" class="cta-float" id="cta-flag" aria-label="立刻前往 領取優惠">
+    <img src="assets/flag.png" alt="立刻前往 領取優惠">
+  </a>
+
+  <!-- ================= HERO SLIDESHOW ================= -->
+  <section class="hero" aria-label="主視覺幻燈片">
+    <div class="slides" id="slides">
+      <!-- slide order matches original reference: camping → hill view → street → road → sea → car -->
+      <div class="slide on" style="background-image:url('assets/girlcamp.jpg')"></div>
+      <div class="slide"    style="background-image:url('assets/girl.jpg')"></div>
+      <div class="slide"    style="background-image:url('assets/citygirl.jpg')"></div>
+      <div class="slide"    style="background-image:url('assets/road.jpg')"></div>
+      <div class="slide"    style="background-image:url('assets/seagirl.jpg')"></div>
+      <div class="slide"    style="background-image:url('assets/car.jpg')"></div>
+    </div>
+
+    <!-- Title -->
+    <div class="hero-title">
+      <div>專屬包車旅遊</div>
+      <div>享受美好時光</div>
+    </div>
+
+    <!-- arrows -->
+    <button class="nav-btn prev" id="prev" aria-label="上一張">
+      <svg viewBox="0 0 24 24"><polyline points="15 5 8 12 15 19"/></svg>
+    </button>
+    <button class="nav-btn next" id="next" aria-label="下一張">
+      <svg viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></svg>
+    </button>
+
+    <!-- dots -->
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <!-- Sub caption BELOW the image -->
+  <div class="subcap">
+    <span class="arrows">▶▶</span>
+    <span>Travel Freely, Collect Moments.</span>
+  </div>
+
+  <!-- §1 旅步特色 -->
+  <section class="section brand-intro" style="margin-top:48px">
+    <div class="brand-intro-text">
+      <span class="tag">旅步 Tripool</span>
+      <h2>全台機場接送、包車<br>與商務用車首選</h2>
+      <p>透明價格合法車隊，24 小時線上預約。<br>專業司機點到點直達，彈性包車與經濟共乘，讓每趟旅程安心又高 CP 值。</p>
+    </div>
+    <div class="brand-intro-stats">
+      <div class="stat-card"><div class="num">40<span class="unit">%</span></div><div class="label">平均節省交通時間</div></div>
+      <div class="stat-card"><div class="num">24<span class="unit">H</span></div><div class="label">全天候線上預約</div></div>
+      <div class="stat-card"><div class="num">7-8<span class="unit">折</span></div><div class="label">約市價優惠票價</div></div>
+      <div class="stat-card"><div class="num">0<span class="unit" style="font-size:13px">隱費</span></div><div class="label">試算即為總價</div></div>
+    </div>
+  </section>
+
+  <!-- §2 三大服務 -->
+  <section class="section">
+    <div class="sec-label">服務項目</div>
+    <h2 class="sec-title">三大服務</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon">🚗</div>
+        <h3>單程專車</h3>
+        <div class="sub">點對點直達</div>
+        <p>獨享服務，不與他人共乘。可加購嬰兒座椅、機場舉牌、寵物友善等加值服務，行李無需擔心。</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">⏱</div>
+        <h3>計時包車</h3>
+        <div class="sub">彈性多點停靠</div>
+        <p>可選 2、4、6、8、10、12 小時，自由安排多點停靠行程，司機隨時候命，不含導覽。</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">🤝</div>
+        <h3>智慧共乘</h3>
+        <div class="sub">系統媒合省費用</div>
+        <p>自動媒合相似路線乘客，費用更實惠，無需自行尋找共乘夥伴，安全又方便。</p>
+      </div>
+    </div>
+    <div class="service-note">🚌 另提供<strong>小巴包車</strong>（試營運中），適合多人出遊，可洽詢。</div>
+  </section>
+
+  <!-- §3 為什麼選擇旅步？ -->
+  <section class="section">
+    <div class="sec-label">品牌優勢</div>
+    <h2 class="sec-title">為什麼選擇旅步？</h2>
+    <div class="adv-grid">
+      <div class="adv-item"><div class="adv-icon">💰</div><div><h4>價格透明</h4><p>網站試算即總價，無隱藏費用，不接受現場追加費用。</p></div></div>
+      <div class="adv-item"><div class="adv-icon">✅</div><div><h4>合法車隊</h4><p>與合法旅行社及租賃公司合作，嚴格篩選司機，定期評分淘汰。</p></div></div>
+      <div class="adv-item"><div class="adv-icon">🕐</div><div><h4>時間彈性</h4><p>24 小時皆可預約，出發前一天 06:00 前可免費取消。</p></div></div>
+      <div class="adv-item"><div class="adv-icon">⚡</div><div><h4>省時省力</h4><p>平均幫乘客節省 40% 交通時間，無需轉乘。</p></div></div>
+      <div class="adv-item"><div class="adv-icon">👶</div><div><h4>兒童安全座椅</h4><p>提供嬰兒座椅及增高墊租借服務，家庭出行更安心。</p></div></div>
+      <div class="adv-item"><div class="adv-icon">🤖</div><div><h4>AI 調度技術</h4><p>自研演算法降低空車率，旺季穩定服務品質，價格約市價 7-8 折。</p></div></div>
+    </div>
+  </section>
+
+  <!-- §4 預約流程 -->
+  <section class="section">
+    <div class="sec-label">預約方式</div>
+    <h2 class="sec-title">4 步驟完成預約</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h4>選擇服務</h4><p>前往網站或 App，選擇服務並輸入起訖點</p></div>
+      <div class="step"><div class="num">2</div><h4>填寫需求</h4><p>選擇人數、行李數量及車型（5 人座 / 9 人座）</p></div>
+      <div class="step"><div class="num">3</div><h4>確認行程</h4><p>選擇出發日期與時間</p></div>
+      <div class="step"><div class="num">4</div><h4>完成付款</h4><p>信用卡、Apple Pay、Google Pay、超商、ATM 均可</p></div>
+    </div>
+    <div class="step-note">※ 本 demo 頁面不串接外部付款系統，預約流程為示意用途</div>
+  </section>
+
+  <!-- §5 常見問題 -->
+  <section class="section">
+    <div class="sec-label">FAQ</div>
+    <h2 class="sec-title">常見問題</h2>
+    <div class="faq-list" id="faq">
+      <div class="faq-item">
+        <button class="faq-q"><span>三種服務有什麼差異？</span><span class="chevron"></span></button>
+        <div class="faq-a">單程專車＝獨享點對點；計時包車＝自由多點停靠；智慧共乘＝系統配對省費用。依需求選擇最適合的服務。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>為什麼旅步的價格比較實惠？</span><span class="chevron"></span></button>
+        <div class="faq-a">AI 調度降低空車率，提高回頭車比例，費用回饋給乘客，並非削減司機或車輛品質。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>如何取得收據與發票？</span><span class="chevron"></span></button>
+        <div class="faq-a">乘車後一週內寄出電子收據，可輸入統編，免加收 5% 稅金。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>什麼時候確認司機資訊？</span><span class="chevron"></span></button>
+        <div class="faq-a">付款後訂單成立，出發前一晚 20:00 以簡訊及 Email 通知司機資訊，讓您提前掌握行程。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>可以一次預約來回嗎？</span><span class="chevron"></span></button>
+        <div class="faq-a">來回需分兩筆訂單，無來回合購折扣，但可使用優惠代碼，例如本次春季活動的 85 折優惠。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §6 App 下載 -->
+  <section class="section">
+    <div class="app-section">
+      <div>
+        <h2>立即下載旅步 App</h2>
+        <p>即時查詢報價、管理訂單、掌握行程與司機資訊、接收出發提醒通知</p>
+        <div class="app-badges">
+          <a href="#" class="app-badge">🍎 App Store</a>
+          <a href="#" class="app-badge">▶ Google Play</a>
+        </div>
+      </div>
+      <div class="qr-wrap">
+        <div class="qr-code"><span>QR Code<br>（示意）</span></div>
+        <div class="qr-label">掃描下載 App</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §7 合作夥伴 -->
+  <section class="section">
+    <div class="sec-label">合作夥伴</div>
+    <h2 class="sec-title">值得信賴的選擇</h2>
+    <div class="partners-grid">
+      <span class="partner-tag">中華航空</span>
+      <span class="partner-tag">Booking.com</span>
+      <span class="partner-tag">外交部</span>
+      <span class="partner-tag">台積電</span>
+      <span class="partner-tag">臺灣大學</span>
+      <span class="partner-tag">商業周刊</span>
+      <span class="partner-tag">SHISEIDO</span>
+      <span class="partner-tag">Foodpanda</span>
+      <span class="partner-tag">Volvo</span>
+      <span class="partner-tag">Rakuten</span>
+    </div>
+  </section>
+
+  <!-- ================= Price calculator ================= -->
+  <section id="price-calc" class="calc-wrap" aria-label="線上報價">
+    <div class="calc-head">
+      <h2>線上報價</h2>
+      <p class="sub">旅遊代步與機場接送的最佳選擇 — 哪裡都敢接，哪裡都能到！</p>
+    </div>
+
+    <div class="calc-card">
+      <!-- country -->
+      <div class="field">
+        <div class="field-row">
+          <label>乘車國家</label>
+          <span class="promo-badge" id="promo-badge">已獲得優惠！</span>
+        </div>
+        <div class="select" data-kind="country">
+          <button type="button" class="select-toggle" data-locked="true" aria-disabled="true">
+            <span>臺灣</span>
+            <span class="caret" style="visibility:hidden"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- pickup -->
+      <div class="trip-block pickup">
+        <div class="trip-title"><span class="dot-ico"></span>上車地點</div>
+
+        <input type="text" class="addr-input landmark" placeholder="依地標搜尋（例：臺北車站、松山機場）" data-kind="pickup-landmark">
+        <div class="or-divider"><span>或逐項選擇</span></div>
+
+        <div class="cascade" data-cascade="pickup">
+          <div class="select" data-kind="pickup-city">
+          <button type="button" class="select-toggle placeholder"><span>請選擇縣市</span><span class="caret"></span></button>
+          <div class="menu" role="listbox"></div>
+        </div>
+
+        <div class="layer" data-layer="pickup-district">
+          <div class="select" data-kind="pickup-district">
+            <button type="button" class="select-toggle placeholder"><span>請選擇鄉鎮市區</span><span class="caret"></span></button>
+            <div class="menu" role="listbox"></div>
+          </div>
+        </div>
+
+        <div class="layer" data-layer="pickup-addr">
+          <input type="text" class="addr-input" placeholder="請輸入街道、門牌號碼（例：中正路 100 號）" data-kind="pickup-addr">
+        </div>
+        </div>
+      </div>
+
+      <!-- dropoff -->
+      <div class="trip-block dropoff">
+        <div class="trip-title"><span class="dot-ico"></span>下車地點</div>
+
+        <input type="text" class="addr-input landmark" placeholder="依地標搜尋（例：富錦街、象山步道）" data-kind="dropoff-landmark">
+        <div class="or-divider"><span>或逐項選擇</span></div>
+
+        <div class="cascade" data-cascade="dropoff">
+          <div class="select" data-kind="dropoff-city">
+          <button type="button" class="select-toggle placeholder"><span>請選擇縣市</span><span class="caret"></span></button>
+          <div class="menu" role="listbox"></div>
+        </div>
+
+        <div class="layer" data-layer="dropoff-district">
+          <div class="select" data-kind="dropoff-district">
+            <button type="button" class="select-toggle placeholder"><span>請選擇鄉鎮市區</span><span class="caret"></span></button>
+            <div class="menu" role="listbox"></div>
+          </div>
+        </div>
+
+        <div class="layer" data-layer="dropoff-addr">
+          <input type="text" class="addr-input" placeholder="請輸入街道、門牌號碼（例：中山北路 1 段 25 號）" data-kind="dropoff-addr">
+        </div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px">
+        <button type="button" class="submit-btn" id="quote-btn">查詢真實價格</button>
+      </div>
+
+      <div class="quote-result" id="quote-result">
+        <div class="qr-row"><span>預估總車資</span><span><span class="qr-price original" id="qr-price-original" style="display:none"></span><span class="qr-price" id="qr-price">NT$ --</span></span></div>
+        <div class="promo-note" id="promo-note">套用春季包車旅遊限定 85 折優惠！</div>
+        <div class="qr-row"><span id="qr-route">—</span><span id="qr-distance">—</span></div>
+        <div class="qr-note">* 本報價為 demo 示意，實際金額依旅步官方計價為準。</div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="brand-f">旅步 Tripool</div>
+    <div class="copy">此網頁為應募用作品，使用 Claude Design 設計<br>© 2024 旅步 Tripool. All rights reserved.</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('#slides .slide'));
+  const dotsEl = document.getElementById('dots');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+
+  let idx = 0;
+  let timer = null;
+  const INTERVAL = 5000;
+
+  // build dots
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (i===0?' on':'');
+    b.setAttribute('aria-label', '第 '+(i+1)+' 張');
+    b.addEventListener('click', () => go(i, true));
+    dotsEl.appendChild(b);
+  });
+  const dots = Array.from(dotsEl.children);
+
+  function go(n, userTriggered){
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s,i) => s.classList.toggle('on', i===idx));
+    dots.forEach((d,i)   => d.classList.toggle('on', i===idx));
+    if(userTriggered) restart();
+  }
+  function nextSlide(){ go(idx+1); }
+  function prevSlide(){ go(idx-1); }
+
+  function start(){ timer = setInterval(nextSlide, INTERVAL); }
+  function stop(){ if(timer){clearInterval(timer); timer=null;} }
+  function restart(){ stop(); start(); }
+
+  next.addEventListener('click', () => { nextSlide(); restart(); });
+  prev.addEventListener('click', () => { prevSlide(); restart(); });
+
+  // pause on hover
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mouseenter', stop);
+  hero.addEventListener('mouseleave', start);
+
+  // keyboard
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight'){ nextSlide(); restart(); }
+    if(e.key === 'ArrowLeft') { prevSlide(); restart(); }
+  });
+
+  start();
+})();
+
+/* ========== price calc dropdowns ========== */
+(function(){
+  const CITIES = {
+    "臺北市": ["中正區","大同區","中山區","松山區","大安區","信義區","內湖區","士林區","北投區","南港區","文山區","萬華區"],
+    "新北市": ["板橋區","三重區","中和區","永和區","新店區","樹林區","土城區","三峡區","汐止區","福隆區","平溪區","琪瑤區"],
+    "桃園市": ["桃園區","中壢區","平鎮區","八德區","楸枟區","龍潭區","大溪區","大園區","龜山區","蘆竹區"],
+    "臺中市": ["中區","東區","南區","西區","北區","西屯區","北屯區","南屯區","豐原區","東勢區","清水區","沙鹿區"],
+    "臺南市": ["中西區","東區","南區","北區","安平區","安南區","永康區","歸仁區","新化區","學甲區","鹽水區","麥寮區"],
+    "高雄市": ["鷳雅區","鼓山區","左營區","楓寮區","三民區","新興區","前金區","苩雅區","前鎮區","旗津區","小港區","鳳山區"],
+    "基隆市": ["仁愛區","信義區","中正區","中山區","安樂區","曖曖區","七堵區"],
+    "新竹市": ["東區","北區","香山區"],
+    "嘉義市": ["東區","西區"],
+    "新竹縣": ["竹北市","竹東鎮","新埔鎮","關西鎮","湖口鄉","新豐鄉","花樂村"],
+    "宜蘭縣": ["宜蘭市","羅東鎮","蘇澳鎮","頭城鎮","礁溪鄉","壯圍鄉","大同鄉"],
+    "花蓮縣": ["花蓮市","吉安鄉","壽豐鄉","環唐鎮","新城鄉","秀林鄉","玉里鎮"],
+    "臺東縣": ["臺東市","成功鎮","關山鎮","卑南鄉","鹿野鄉","綠島鄉","蘭嶼鄉"],
+    "彰化縣": ["彰化市","鹿港鎮","和美鎮","員林鎮","溪湖鎮","田中鎮"],
+    "南投縣": ["南投市","埔里鎮","草屯鎮","竹山鎮","集集鎮","魚池鄉","信義鄉"],
+    "雲林縣": ["斗六市","斗南鎮","虎尾鎮","西螺鎮","北港鎮","古坑鄉"],
+    "嘉義縣": ["太保市","朱崎市","民雄鄉","大林鎮","新港鄉","阿里山鄉"],
+    "屏東縣": ["屏東市","潮州鎮","東港鎮","恒春鎮","華鬃鄉","林邊鄉","禬丁鄉"],
+    "臺灣離島": ["馬公市","澎湖鄉","金城鄉","金湖鄉","麥寮鄉","南竿鄉"]
+  };
+
+  const state = { country:"臺灣" };
+
+  function setLabel(sel, text){
+    const btn = sel.querySelector('.select-toggle > span:first-child');
+    btn.textContent = text;
+    sel.querySelector('.select-toggle').classList.remove('placeholder');
+  }
+
+  function closeAll(){ document.querySelectorAll('.select.open').forEach(s=>s.classList.remove('open')); }
+
+  function fillMenu(sel, items, onPick){
+    const menu = sel.querySelector('.menu');
+    menu.innerHTML = '';
+    items.forEach(v => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = v;
+      b.addEventListener('click', () => { onPick(v); sel.classList.remove('open'); });
+      menu.appendChild(b);
+    });
+  }
+
+  function bindToggle(sel){
+    const btn = sel.querySelector('.select-toggle');
+    if (btn.dataset.locked === 'true') return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wasOpen = sel.classList.contains('open');
+      closeAll();
+      if (!wasOpen) sel.classList.add('open');
+    });
+  }
+
+  document.addEventListener('click', closeAll);
+
+  function setupPair(prefix){
+    const citySel = document.querySelector('.select[data-kind="'+prefix+'-city"]');
+    const distSel = document.querySelector('.select[data-kind="'+prefix+'-district"]');
+    const distLayer = document.querySelector('.layer[data-layer="'+prefix+'-district"]');
+    const addrLayer = document.querySelector('.layer[data-layer="'+prefix+'-addr"]');
+
+    bindToggle(citySel);
+    bindToggle(distSel);
+
+    fillMenu(citySel, Object.keys(CITIES), (city) => {
+      setLabel(citySel, city);
+      state[prefix+'City'] = city;
+      // reset district
+      setLabel(distSel, '請選擇鄉鎮市區');
+      distSel.querySelector('.select-toggle').classList.add('placeholder');
+      distLayer.classList.add('show');
+      addrLayer.classList.remove('show');
+      state[prefix+'District'] = null;
+      fillMenu(distSel, CITIES[city], (d) => {
+        setLabel(distSel, d);
+        state[prefix+'District'] = d;
+        addrLayer.classList.add('show');
+      });
+    });
+  }
+
+  setupPair('pickup');
+  setupPair('dropoff');
+
+  // Landmark inputs: when filled, hide the cascading selects (user went by landmark)
+  ['pickup','dropoff'].forEach(prefix => {
+    const land = document.querySelector('input[data-kind="'+prefix+'-landmark"]');
+    const cascade = document.querySelector('.cascade[data-cascade="'+prefix+'"]');
+    if(!land || !cascade) return;
+    land.addEventListener('input', () => {
+      if(land.value.trim().length > 0){
+        cascade.classList.add('hide-cascade');
+      } else {
+        cascade.classList.remove('hide-cascade');
+      }
+    });
+  });
+
+  // submit -> fake quote
+  const btn = document.getElementById('quote-btn');
+  const result = document.getElementById('quote-result');
+  btn.addEventListener('click', () => {
+    const pc = state.pickupCity, pd = state.pickupDistrict;
+    const dc = state.dropoffCity, dd = state.dropoffDistrict;
+    const pa = document.querySelector('input[data-kind="pickup-addr"]').value.trim();
+    const da = document.querySelector('input[data-kind="dropoff-addr"]').value.trim();
+    const pl = document.querySelector('input[data-kind="pickup-landmark"]').value.trim();
+    const dl = document.querySelector('input[data-kind="dropoff-landmark"]').value.trim();
+
+    const pickupOk = pl.length > 0 || (pc && pd);
+    const dropoffOk = dl.length > 0 || (dc && dd);
+    if(!pickupOk || !dropoffOk){
+      alert('請完整填寫上車與下車地點（地標，或縣市＋鄉鎮市區）');
+      return;
+    }
+    const pickupLabel = pl.length > 0 ? pl : (pc + pd + (pa?(' '+pa):''));
+    const dropoffLabel = dl.length > 0 ? dl : (dc + dd + (da?(' '+da):''));
+    const sameCity = (!pl && !dl) ? (pc === dc) : false;
+    const base = sameCity ? 780 : 2200;
+    const extra = Math.floor(Math.random()*600);
+    const price = base + extra;
+    const km = sameCity ? (6 + Math.floor(Math.random()*18)) : (60 + Math.floor(Math.random()*180));
+    const priceEl = document.getElementById('qr-price');
+    const origEl = document.getElementById('qr-price-original');
+    const noteEl = document.getElementById('promo-note');
+    if(window.__promoActive){
+      const discounted = Math.round(price * 0.85);
+      origEl.style.display = 'inline-block';
+      origEl.textContent = 'NT$ ' + price.toLocaleString();
+      priceEl.textContent = 'NT$ ' + discounted.toLocaleString();
+      priceEl.classList.add('final-discount');
+      noteEl.classList.add('show');
+    } else {
+      origEl.style.display = 'none';
+      priceEl.textContent = 'NT$ ' + price.toLocaleString();
+      priceEl.classList.remove('final-discount');
+      noteEl.classList.remove('show');
+    }
+    document.getElementById('qr-route').textContent = pickupLabel + ' → ' + dropoffLabel;
+    document.getElementById('qr-distance').textContent = '約 ' + km + ' km';
+    result.classList.add('show');
+    const r = result.getBoundingClientRect(); window.scrollTo({top: window.scrollY + r.top - 120, behavior:'smooth'});
+  });
+
+  const flag = document.getElementById('cta-flag');
+  const badge = document.getElementById('promo-badge');
+  if(flag){
+    flag.addEventListener('click', (e) => {
+      if(window.__promoActive) return;
+      e.preventDefault();
+      window.__promoActive = true;
+      flag.classList.add('flyaway');
+      badge.classList.add('show');
+      setTimeout(() => {
+        const el = document.getElementById('price-calc');
+        if(el){
+          const r = el.getBoundingClientRect();
+          window.scrollTo({top: window.scrollY + r.top - 40, behavior:'smooth'});
+        }
+      }, 150);
+    });
+  }
+})();
+
+
+/* ===== FAQ accordion ===== */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
+
+</script>
+</body>
+</html>
