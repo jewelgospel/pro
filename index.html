@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | UI/UX Designer</title>
+    <title>Portfolio | UI/UX & Illustration</title>
     <style>
         :root {
-            --bg-color: #fdfcf8; /* 象牙白 */
-            --primary-color: #b5a48b; /* 霧金/黃銅色 */
+            --bg-color: #fdfcf8;
+            --primary-color: #b5a48b;
             --text-color: #4a4a4a;
             --glass-bg: rgba(255, 255, 255, 0.7);
         }
@@ -22,7 +22,7 @@
 
         header {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             background: linear-gradient(to bottom, #f5f1e6, var(--bg-color));
         }
 
@@ -30,72 +30,62 @@
             font-weight: 300;
             letter-spacing: 4px;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
-        /* 作品集網格 */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .portfolio-item {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(181, 164, 139, 0.2);
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             cursor: pointer;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(181, 164, 139, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(181, 164, 139, 0.2);
         }
 
         .portfolio-item img {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
             display: block;
-            border-bottom: 1px solid rgba(181, 164, 139, 0.1);
         }
 
         .portfolio-info {
-            padding: 20px;
+            padding: 15px;
+            text-align: center;
         }
 
         .portfolio-info h3 {
-            margin: 0 0 10px 0;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-
-        .portfolio-info p {
-            font-size: 0.85rem;
             margin: 0;
-            opacity: 0.8;
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 400;
         }
 
-        /* 放大圖片的遮罩層 (Lightbox) */
+        /* Lightbox */
         #lightbox {
             display: none;
             position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
+            z-index: 9999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
             justify-content: center;
             align-items: center;
             cursor: zoom-out;
@@ -104,78 +94,47 @@
         #lightbox img {
             max-width: 90%;
             max-height: 90%;
-            border-radius: 5px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+            border: 3px solid white;
         }
 
-        footer {
-            text-align: center;
-            padding: 80px 20px;
-            opacity: 0.5;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
+        footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>DESIGN PORTFOLIO</h1>
-        <p>UI/UX Design & Hand-drawn Illustration</p>
-    </header>
+<header>
+    <h1>MY WORKS</h1>
+    <p>Selected Projects & Illustrations</p>
+</header>
 
-    <div class="container">
-        <div class="portfolio-grid">
-            
-            <div class="portfolio-item" onclick="openLightbox(this)">
-                <img src="UI1.png" alt="UI Design Concept">
-                <div class="portfolio-info">
-                    <h3>UI Interface Design</h3>
-                    <p>展示了清爽且具備層次感的介面配置，適合現代網頁與應用程式需求。</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item" onclick="openLightbox(this)">
-                <img src="0423.jpg" alt="Design Log 0423">
-                <div class="portfolio-info">
-                    <h3>Development Log: 04/23</h3>
-                    <p>階段性的設計紀錄，展示從草圖到初步構想的演進過程。</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item" onclick="openLightbox(this)">
-                <img src="0423A.jpg" alt="Design Log 0423A">
-                <div class="portfolio-info">
-                    <h3>System Architecture & Sketch</h3>
-                    <p>針對系統邏輯與手繪細節的進階構思，強化整體視覺與功能的連結。</p>
-                </div>
-            </div>
-
-        </div>
+<div class="container">
+    <div class="portfolio-grid">
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="UI1.png"> <div class="portfolio-info"><h3>UI Design Concept</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423.jpg"> <div class="portfolio-info"><h3>Design Sketch 0423</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="0423A.jpg"> <div class="portfolio-info"><h3>Process Details</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="icon.jpg"> <div class="portfolio-info"><h3>Custom Icons</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="jewel.jpg"> <div class="portfolio-info"><h3>Jewel Illustration</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="mothersday.jpg"> <div class="portfolio-info"><h3>Mother's Day Theme</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="flower.jpg"> <div class="portfolio-info"><h3>Floral Sketch</h3></div></div>
+        <div class="portfolio-item" onclick="openLightbox(this)"><img src="book.jpg"> <div class="portfolio-info"><h3>Object Drawing</h3></div></div>
     </div>
+</div>
 
-    <div id="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Enlarged view">
-    </div>
+<div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img">
+</div>
 
-    <footer>
-        &copy; 2026 UI/UX Portfolio. Designed with Elegance.
-    </footer>
+<footer>&copy; 2026 Designed for Portfolio</footer>
 
-    <script>
-        function openLightbox(element) {
-            const imgSrc = element.querySelector('img').src;
-            document.getElementById('lightbox-img').src = imgSrc;
-            document.getElementById('lightbox').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 防止背景滾動
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.body.style.overflow = 'auto'; // 恢復背景滾動
-        }
-    </script>
+<script>
+    function openLightbox(el) {
+        document.getElementById('lightbox-img').src = el.querySelector('img').src;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>
